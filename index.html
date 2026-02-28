@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Justin Kalski | Quick Intro</title>
+
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      img {
+        border: 0;
+        outline: none;
+        text-decoration: none;
+        display: block;
+      }
+
+      .btn {
+        transition: background-color 150ms ease, border-color 150ms ease;
+      }
+      .btn:hover {
+        background-color: #333333 !important;
+        border-color: #333333 !important;
+      }
+      .btn:focus {
+        outline: 2px solid #111111;
+        outline-offset: 2px;
+      }
+      .link {
+        text-decoration: underline;
+        text-decoration-color: rgba(0, 0, 0, 0.25);
+      }
+      .link:hover {
+        text-decoration-color: rgba(0, 0, 0, 0.85);
+      }
+
+      @keyframes slideUnderline {
+        0% {
+          background-position: 0% 100%;
+          letter-spacing: 0px;
+        }
+        50% {
+          background-position: 100% 100%;
+          letter-spacing: 0.5px;
+        }
+        100% {
+          background-position: 0% 100%;
+          letter-spacing: 0px;
+        }
+      }
+      .animated-title {
+        display: inline-block;
+        background-image: linear-gradient(90deg, #111111, #111111);
+        background-repeat: no-repeat;
+        background-size: 100% 2px;
+        background-position: 0% 100%;
+        animation: slideUnderline 2.6s ease-in-out infinite;
+      }
+
+      .faq-input {
+        display: none;
+      }
+      .faq-label {
+        cursor: pointer;
+        display: block;
+      }
+      .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 220ms ease;
+      }
+      .faq-input:checked + .faq-label + .faq-content {
+        max-height: 220px;
+      }
+
+      .tab-input {
+        display: none;
+      }
+      .tab-label {
+        cursor: pointer;
+        display: inline-block;
+      }
+      .tab-panel {
+        display: none;
+      }
+      #tab1:checked ~ .panels #panel1,
+      #tab2:checked ~ .panels #panel2,
+      #tab3:checked ~ .panels #panel3 {
+        display: block;
+      }
+      #tab1:checked ~ .tabbar .l1,
+      #tab2:checked ~ .tabbar .l2,
+      #tab3:checked ~ .tabbar .l3 {
+        background-color: #111111 !important;
+        color: #ffffff !important;
+      }
+
+      @media screen and (max-width: 620px) {
+        .container {
+          width: 100% !important;
+        }
+        .pad {
+          padding: 16px !important;
+        }
+        .h1 {
+          font-size: 20px !important;
+          line-height: 1.25 !important;
+        }
+        .p {
+          font-size: 14px !important;
+          line-height: 1.7 !important;
+        }
+        .stack {
+          display: block !important;
+          width: 100% !important;
+        }
+        .stack-top {
+          padding-top: 12px !important;
+        }
+        .btn {
+          display: block !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          text-align: center !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body style="margin: 0; padding: 0; background-color: #f2f2f2; font-family: Arial, sans-serif">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+      <tr>
+        <td align="center" style="padding: 26px 10px">
+          <table
+            role="presentation"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            class="container"
+            style="width: 600px; max-width: 600px; background-color: #ffffff"
+          >
+            <tr>
+              <td>
+                <img
+                  src="assets/images/hero.jpg"
+                  alt="Justin Kalski"
+                  width="600"
+                  style="width: 100%; max-width: 600px; height: auto"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 24px; color: #111111">
+                <h1 class="h1" style="margin: 0 0 10px 0; font-size: 24px; line-height: 1.2">
+                  <span class="animated-title">Quick intro</span> — Justin Kalski
+                </h1>
+
+                <p class="p" style="margin: 0 0 12px 0; font-size: 15px; line-height: 1.8">
+                  I’m a CSUN CS senior and I work in IT at LADWP.
+                </p>
+
+                <p class="p" style="margin: 0; font-size: 15px; line-height: 1.8">
+                  If you want to see my work, my portfolio is the best starting point.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 0 24px 18px 24px">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td class="stack" style="width: 50%; padding-right: 6px">
+                      <a
+                        class="btn"
+                        href="https://www.justinkalski.com/"
+                        style="
+                          display: inline-block;
+                          background-color: #111111;
+                          color: #ffffff;
+                          padding: 14px 16px;
+                          border: 1px solid #111111;
+                          font-size: 15px;
+                        "
+                        aria-label="Visit Justin Kalski website"
+                        >Visit Portfolio</a
+                      >
+                    </td>
+                    <td class="stack stack-top" style="width: 50%; padding-left: 6px">
+                      <a
+                        class="btn"
+                        href="https://github.com/jkalski"
+                        style="
+                          display: inline-block;
+                          background-color: #ffffff;
+                          color: #111111;
+                          padding: 14px 16px;
+                          border: 1px solid #cccccc;
+                          font-size: 15px;
+                        "
+                        aria-label="Open GitHub"
+                        >Open GitHub</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.6; color: #666666">
+                 might see some overlap with my hw3 assignment since I reused the same content, but I updated the design and structure to be more email friendly and to meet the new requirements.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 20px 24px; background-color: #fafafa; color: #111111">
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">A bit more about me</h2>
+
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td class="stack" valign="top" style="width: 50%; padding-right: 8px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 15px">What I do</h3>
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7">
+                        IT support + web dev + integrations. I like projects where I can build, test, and ship improvements quickly.
+                      </p>
+                    </td>
+
+                    <td class="stack stack-top" valign="top" style="width: 50%; padding-left: 8px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 15px">Recent work</h3>
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7">
+                        Wallet passes, OCR-style forms, and school projects that focus on real constraints (teams, fairness, scheduling).
+                      </p>
+                      <p class="p" style="margin: 8px 0 0 0; font-size: 15px; line-height: 1.7">
+                        <a class="link" href="https://www.justinkalski.com/" style="color: #111111">Portfolio link</a>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 20px 24px; color: #111111">
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">What you can expect</h2>
+
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td class="stack" valign="top" style="width: 33.33%; padding-right: 8px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 15px">Build</h3>
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                        I can take a feature from idea → working version.
+                      </p>
+                    </td>
+
+                    <td class="stack stack-top" valign="top" style="width: 33.33%; padding-left: 8px; padding-right: 8px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 15px">Debug</h3>
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                        I’m patient with problems and I document fixes.
+                      </p>
+                    </td>
+
+                    <td class="stack stack-top" valign="top" style="width: 33.33%; padding-left: 8px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 15px">Communicate</h3>
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                        Updates that are clear and not vague.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                class="pad"
+                style="
+                  padding: 22px 24px;
+                  color: #ffffff;
+                  background-image: url('assets/images/bg.jpg');
+                  background-size: cover;
+                  background-position: center;
+                "
+              >
+                <h2 style="margin: 0 0 8px 0; font-size: 18px">If you’re hiring</h2>
+                <p class="p" style="margin: 0; font-size: 15px; line-height: 1.8">
+                  I’m aiming for roles where I can grow fast and keep shipping.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 20px 24px; color: #111111">
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">Quick questions</h2>
+
+                <div style="border: 1px solid #dddddd; padding: 10px; margin-bottom: 10px">
+                  <input class="faq-input" type="checkbox" id="faq1" />
+                  <label class="faq-label" for="faq1" style="font-weight: bold; font-size: 14px">
+                    What should I click first?
+                  </label>
+                  <div class="faq-content" style="margin-top: 8px">
+                    <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                      My portfolio! It’s the cleanest overview and it links out to projects and my resume!
+                    </p>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid #dddddd; padding: 10px; margin-bottom: 10px">
+                  <input class="faq-input" type="checkbox" id="faq2" />
+                  <label class="faq-label" for="faq2" style="font-weight: bold; font-size: 14px">
+                    What roles am I looking for?
+                  </label>
+                  <div class="faq-content" style="margin-top: 8px">
+                    <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                      IT support / IT analyst roles and entry-level dev roles (especially web + integrations) would be fire.
+                    </p>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid #dddddd; padding: 10px">
+                  <input class="faq-input" type="checkbox" id="faq3" />
+                  <label class="faq-label" for="faq3" style="font-weight: bold; font-size: 14px">
+                    Why does this open/close?
+                  </label>
+                  <div class="faq-content" style="margin-top: 8px">
+                    <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7; color: #333333">
+                      it meets the requirement for an interactive element.
+                    </p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad" style="padding: 20px 24px; background-color: #fafafa; color: #111111">
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">Choose a section</h2>
+
+                <div>
+                  <input class="tab-input" type="radio" id="tab1" name="tabs" checked />
+                  <input class="tab-input" type="radio" id="tab2" name="tabs" />
+                  <input class="tab-input" type="radio" id="tab3" name="tabs" />
+
+                  <div class="tabbar" style="margin-bottom: 10px">
+                    <label class="tab-label l1" for="tab1" style="padding: 8px 10px; background-color: #ffffff; border: 1px solid #cccccc; font-size: 13px"
+                      >Projects</label
+                    >
+                    <label class="tab-label l2" for="tab2" style="padding: 8px 10px; background-color: #ffffff; border: 1px solid #cccccc; font-size: 13px; margin-left: 6px"
+                      >Experience</label
+                    >
+                    <label class="tab-label l3" for="tab3" style="padding: 8px 10px; background-color: #ffffff; border: 1px solid #cccccc; font-size: 13px; margin-left: 6px"
+                      >Resume</label
+                    >
+                  </div>
+
+                  <div class="panels" style="border: 1px solid #dddddd; padding: 10px; background-color: #ffffff">
+                    <div class="tab-panel" id="panel1">
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7">
+                        Projects are linked from my portfolio site.
+                        <a class="link" href="https://www.justinkalski.com/" style="color: #111111">Open portfolio</a>.
+                      </p>
+                    </div>
+
+                    <div class="tab-panel" id="panel2">
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7">
+                        I work IT at LADWP and I’ve built web features for projects/internships (integrations, APIs, deployment stuff).
+                      </p>
+                    </div>
+
+                    <div class="tab-panel" id="panel3">
+                      <p class="p" style="margin: 0; font-size: 15px; line-height: 1.7">
+                        My resume link is on my portfolio site.
+                        <a class="link" href="https://www.justinkalski.com/" style="color: #111111">Resume link</a>.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 14px 18px; font-size: 12px; color: #666666; text-align: center">
+                COMP 584 HW4 — Justin Kalski<br />
+                <a class="link" href="https://www.justinkalski.com/" style="color: #666666">Website</a>
+                &nbsp;•&nbsp;
+                <a class="link" href="https://github.com/jkalski" style="color: #666666">GitHub</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
