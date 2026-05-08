@@ -110,6 +110,29 @@
         color: #ffffff !important;
       }
 
+      /* Chart.js enhancement styles: keeps the new canvas chart responsive inside the existing email-style layout. */
+      .chart-wrap {
+        position: relative;
+        width: 100%;
+        height: 280px;
+      }
+      .chart-control {
+        cursor: pointer;
+        background-color: #ffffff;
+        color: #111111;
+        border: 1px solid #cccccc;
+        padding: 8px 10px;
+        font-size: 13px;
+        font-family: Arial, sans-serif;
+      }
+      .chart-control.active,
+      .chart-control:hover,
+      .chart-control:focus {
+        background-color: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
       @media screen and (max-width: 620px) {
         .container {
           width: 100% !important;
@@ -138,8 +161,14 @@
           box-sizing: border-box !important;
           text-align: center !important;
         }
+        .chart-wrap {
+          height: 240px !important;
+        }
       }
     </style>
+
+    <!-- New technology for HW5: Chart.js renders responsive canvas-based data visualizations with a small CDN import. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body style="margin: 0; padding: 0; background-color: #f2f2f2; font-family: Arial, sans-serif">
@@ -290,6 +319,25 @@
             </tr>
 
             <tr>
+              <td class="pad" style="padding: 20px 24px; background-color: #ffffff; color: #111111">
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">Technical snapshot</h2>
+                <p class="p" style="margin: 0 0 12px 0; font-size: 15px; line-height: 1.7; color: #333333">
+                  A quick visual breakdown of where my current work is focused.
+                </p>
+
+                <div style="margin-bottom: 12px">
+                  <button class="chart-control active" type="button" data-chart-view="skills">Skills</button>
+                  <button class="chart-control" type="button" data-chart-view="work" style="margin-left: 6px">Recent Work</button>
+                  <button class="chart-control" type="button" data-chart-view="focus" style="margin-left: 6px">Career Focus</button>
+                </div>
+
+                <div class="chart-wrap">
+                  <canvas id="techSnapshotChart" aria-label="Technical snapshot radar chart" role="img"></canvas>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
               <td
                 class="pad"
                 style="
@@ -401,5 +449,99 @@
         </td>
       </tr>
     </table>
+
+    <script>
+      // Chart.js data model: each button swaps in a different dataset without reloading the page.
+      const chartViews = {
+        skills: {
+          label: "Skills",
+          data: [82, 88, 76, 90, 74, 84],
+        },
+        work: {
+          label: "Recent Work",
+          data: [78, 92, 86, 82, 80, 76],
+        },
+        focus: {
+          label: "Career Focus",
+          data: [84, 86, 90, 88, 82, 78],
+        },
+      };
+
+      const chartLabels = ["Web Dev", "IT Support", "APIs", "Debugging", "Deployment", "Docs"];
+      const chartCanvas = document.getElementById("techSnapshotChart");
+      const chartButtons = document.querySelectorAll("[data-chart-view]");
+
+      // Chart.js initialization: the radar chart is responsive and uses project-friendly neutral colors.
+      const techSnapshotChart = new Chart(chartCanvas, {
+        type: "radar",
+        data: {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: chartViews.skills.label,
+              data: chartViews.skills.data,
+              backgroundColor: "rgba(17, 17, 17, 0.12)",
+              borderColor: "#111111",
+              pointBackgroundColor: "#111111",
+              pointBorderColor: "#ffffff",
+              pointHoverBackgroundColor: "#ffffff",
+              pointHoverBorderColor: "#111111",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: "#111111",
+                font: {
+                  family: "Arial",
+                },
+              },
+            },
+          },
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                display: false,
+                stepSize: 20,
+              },
+              pointLabels: {
+                color: "#111111",
+                font: {
+                  family: "Arial",
+                  size: 12,
+                },
+              },
+              grid: {
+                color: "#dddddd",
+              },
+              angleLines: {
+                color: "#dddddd",
+              },
+            },
+          },
+        },
+      });
+
+      // Interaction layer: updates the existing chart instance and active button state.
+      chartButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const selectedView = chartViews[button.dataset.chartView];
+
+          techSnapshotChart.data.datasets[0].label = selectedView.label;
+          techSnapshotChart.data.datasets[0].data = selectedView.data;
+          techSnapshotChart.update();
+
+          chartButtons.forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+        });
+      });
+    </script>
   </body>
 </html>
