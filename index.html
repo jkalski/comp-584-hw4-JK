@@ -110,13 +110,32 @@
         color: #ffffff !important;
       }
 
-      /* Chart.js enhancement styles: keeps the new canvas chart responsive inside the existing email-style layout. */
-      .chart-wrap {
+      /*
+        -------
+        THREE.JS STYLES
+        -------
+      */
+      .three-wrap {
         position: relative;
         width: 100%;
-        height: 280px;
+        height: 300px;
+        background-color: #f6f6f6;
+        border: 1px solid #dddddd;
+        overflow: hidden;
       }
-      .chart-control {
+      .three-wrap canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .three-fallback {
+        display: none;
+        padding: 14px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #333333;
+      }
+      .three-control {
         cursor: pointer;
         background-color: #ffffff;
         color: #111111;
@@ -125,9 +144,9 @@
         font-size: 13px;
         font-family: Arial, sans-serif;
       }
-      .chart-control.active,
-      .chart-control:hover,
-      .chart-control:focus {
+      .three-control.active,
+      .three-control:hover,
+      .three-control:focus {
         background-color: #111111;
         color: #ffffff;
         outline: none;
@@ -161,14 +180,18 @@
           box-sizing: border-box !important;
           text-align: center !important;
         }
-        .chart-wrap {
-          height: 240px !important;
+        .three-wrap {
+          height: 250px !important;
         }
       }
     </style>
 
-    <!-- New technology for HW5: Chart.js renders responsive canvas-based data visualizations with a small CDN import. -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--
+      -------
+      THREE.JS CDN IMPORT
+      -------
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   </head>
 
   <body style="margin: 0; padding: 0; background-color: #f2f2f2; font-family: Arial, sans-serif">
@@ -205,12 +228,11 @@
                   I'm a CSUN CS senior and I work in IT at LADWP.
                 </p>
 
-                <!-- INTENTIONAL VALIDATION ERROR BELOW -->
                 <p class="p" style="margin: 0; font-size: 15px; line-height: 1.8">
                   If you want to see my work, my portfolio is the best starting point.
                   <div>This div is incorrectly nested inside a paragraph.</div>
                 </p>
-                <!-- END INTENTIONAL ERROR -->
+
 
               </td>
             </tr>
@@ -320,19 +342,21 @@
 
             <tr>
               <td class="pad" style="padding: 20px 24px; background-color: #ffffff; color: #111111">
-                <h2 style="margin: 0 0 10px 0; font-size: 18px">Technical snapshot</h2>
+                <h2 style="margin: 0 0 10px 0; font-size: 18px">Interactive tech model</h2>
                 <p class="p" style="margin: 0 0 12px 0; font-size: 15px; line-height: 1.7; color: #333333">
-                  A quick visual breakdown of where my current work is focused.
+                  A small 3D scene showing three interactive WebGL shapes built with JavaScript.
                 </p>
 
                 <div style="margin-bottom: 12px">
-                  <button class="chart-control active" type="button" data-chart-view="skills">Skills</button>
-                  <button class="chart-control" type="button" data-chart-view="work" style="margin-left: 6px">Recent Work</button>
-                  <button class="chart-control" type="button" data-chart-view="focus" style="margin-left: 6px">Career Focus</button>
+                  <button class="three-control active" type="button" data-scene-mode="cube">Cube</button>
+                  <button class="three-control" type="button" data-scene-mode="diamond" style="margin-left: 6px">Diamond</button>
+                  <button class="three-control" type="button" data-scene-mode="donut" style="margin-left: 6px">Donut</button>
                 </div>
 
-                <div class="chart-wrap">
-                  <canvas id="techSnapshotChart" aria-label="Technical snapshot radar chart" role="img"></canvas>
+                <div class="three-wrap" id="threeScene" aria-label="Interactive Three.js technology model" role="img">
+                  <div class="three-fallback" id="threeFallback">
+                    The 3D scene needs WebGL and the Three.js library to load.
+                  </div>
                 </div>
               </td>
             </tr>
@@ -451,97 +475,130 @@
     </table>
 
     <script>
-      // Chart.js data model: each button swaps in a different dataset without reloading the page.
-      const chartViews = {
-        skills: {
-          label: "Skills",
-          data: [82, 88, 76, 90, 74, 84],
+      const sceneContainer = document.getElementById("threeScene");
+      const sceneFallback = document.getElementById("threeFallback");
+      const sceneButtons = document.querySelectorAll("[data-scene-mode]");
+
+      /*
+        -------
+        THREE.JS MODE DATA
+        -------
+      */
+      const sceneModes = {
+        cube: {
+          color: 0x111111,
+          speed: 0.012,
+          geometry: () => new THREE.BoxGeometry(1.35, 1.35, 1.35),
         },
-        work: {
-          label: "Recent Work",
-          data: [78, 92, 86, 82, 80, 76],
+        diamond: {
+          color: 0x0066cc,
+          speed: 0.018,
+          geometry: () => new THREE.OctahedronGeometry(1.05, 0),
         },
-        focus: {
-          label: "Career Focus",
-          data: [84, 86, 90, 88, 82, 78],
+        donut: {
+          color: 0xd4af37,
+          speed: 0.022,
+          geometry: () => new THREE.TorusGeometry(0.82, 0.24, 32, 96),
         },
       };
 
-      const chartLabels = ["Web Dev", "IT Support", "APIs", "Debugging", "Deployment", "Docs"];
-      const chartCanvas = document.getElementById("techSnapshotChart");
-      const chartButtons = document.querySelectorAll("[data-chart-view]");
+      if (window.THREE && sceneContainer) {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, sceneContainer.clientWidth / sceneContainer.clientHeight, 0.1, 100);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const group = new THREE.Group();
+        let activeMode = "cube";
+        let coreMesh;
 
-      // Chart.js initialization: the radar chart is responsive and uses project-friendly neutral colors.
-      const techSnapshotChart = new Chart(chartCanvas, {
-        type: "radar",
-        data: {
-          labels: chartLabels,
-          datasets: [
-            {
-              label: chartViews.skills.label,
-              data: chartViews.skills.data,
-              backgroundColor: "rgba(17, 17, 17, 0.12)",
-              borderColor: "#111111",
-              pointBackgroundColor: "#111111",
-              pointBorderColor: "#ffffff",
-              pointHoverBackgroundColor: "#ffffff",
-              pointHoverBorderColor: "#111111",
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              labels: {
-                color: "#111111",
-                font: {
-                  family: "Arial",
-                },
-              },
-            },
-          },
-          scales: {
-            r: {
-              beginAtZero: true,
-              max: 100,
-              ticks: {
-                display: false,
-                stepSize: 20,
-              },
-              pointLabels: {
-                color: "#111111",
-                font: {
-                  family: "Arial",
-                  size: 12,
-                },
-              },
-              grid: {
-                color: "#dddddd",
-              },
-              angleLines: {
-                color: "#dddddd",
-              },
-            },
-          },
-        },
-      });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(sceneContainer.clientWidth, sceneContainer.clientHeight);
+        sceneContainer.appendChild(renderer.domElement);
 
-      // Interaction layer: updates the existing chart instance and active button state.
-      chartButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const selectedView = chartViews[button.dataset.chartView];
+        camera.position.set(0, 0.35, 5);
+        scene.add(group);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
 
-          techSnapshotChart.data.datasets[0].label = selectedView.label;
-          techSnapshotChart.data.datasets[0].data = selectedView.data;
-          techSnapshotChart.update();
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        keyLight.position.set(3, 4, 5);
+        scene.add(keyLight);
 
-          chartButtons.forEach((item) => item.classList.remove("active"));
-          button.classList.add("active");
+        /*
+          -------
+          CORE 3D MESH
+          -------
+        */
+        function setCoreMesh(modeName) {
+          const mode = sceneModes[modeName];
+
+          if (coreMesh) {
+            group.remove(coreMesh);
+            coreMesh.geometry.dispose();
+            coreMesh.material.dispose();
+          }
+
+          coreMesh = new THREE.Mesh(
+            mode.geometry(),
+            new THREE.MeshStandardMaterial({
+              color: mode.color,
+              metalness: 0.18,
+              roughness: 0.34,
+            })
+          );
+          group.add(coreMesh);
+        }
+
+        setCoreMesh(activeMode);
+
+        /*
+          -------
+          BUTTON INTERACTION
+          -------
+        */
+        sceneButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            activeMode = button.dataset.sceneMode;
+            setCoreMesh(activeMode);
+
+            sceneButtons.forEach((item) => item.classList.remove("active"));
+            button.classList.add("active");
+          });
         });
-      });
+
+        /*
+          -------
+          RESPONSIVE RESIZE
+          -------
+        */
+        function resizeScene() {
+          const width = sceneContainer.clientWidth;
+          const height = sceneContainer.clientHeight;
+
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        }
+
+        window.addEventListener("resize", resizeScene);
+
+        /*
+          -------
+          ANIMATION LOOP
+          -------
+        */
+        function animateScene() {
+          const mode = sceneModes[activeMode];
+
+          group.rotation.y += mode.speed;
+          group.rotation.x = Math.sin(Date.now() * 0.001) * 0.18;
+
+          renderer.render(scene, camera);
+          requestAnimationFrame(animateScene);
+        }
+
+        animateScene();
+      } else if (sceneFallback) {
+        sceneFallback.style.display = "block";
+      }
     </script>
   </body>
 </html>
