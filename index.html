@@ -187,9 +187,9 @@
     </style>
 
     <!--
-      -------
+      -------------------------------------------------
       THREE.JS CDN IMPORT
-      -------
+      -------------------------------------------------
     -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   </head>
@@ -480,9 +480,9 @@
       const sceneButtons = document.querySelectorAll("[data-scene-mode]");
 
       /*
-        -------
+        --------------------------------------------
         THREE.JS MODE DATA
-        -------
+        --------------------------------------------
       */
       const sceneModes = {
         cube: {
@@ -523,9 +523,9 @@
         scene.add(keyLight);
 
         /*
-          -------
+          ---------------------------
           CORE 3D MESH
-          -------
+          ----------------------------
         */
         function setCoreMesh(modeName) {
           const mode = sceneModes[modeName];
@@ -550,9 +550,9 @@
         setCoreMesh(activeMode);
 
         /*
-          -------
+          --------------------------------
           BUTTON INTERACTION
-          -------
+          ---------------------------------
         */
         sceneButtons.forEach((button) => {
           button.addEventListener("click", () => {
@@ -565,9 +565,9 @@
         });
 
         /*
-          -------
+          -------------------------------
           RESPONSIVE RESIZE
-          -------
+          -------------------------------
         */
         function resizeScene() {
           const width = sceneContainer.clientWidth;
@@ -581,9 +581,9 @@
         window.addEventListener("resize", resizeScene);
 
         /*
-          -------
+          -------------------------------
           ANIMATION LOOP
-          -------
+          -------------------------------
         */
         function animateScene() {
           const mode = sceneModes[activeMode];
